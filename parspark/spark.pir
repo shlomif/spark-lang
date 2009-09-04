@@ -1,14 +1,14 @@
 =head1 TITLE
 
-steme.pir - A Steme compiler.
+spark.pir - A Spark compiler.
 
 =head2 Description
 
-This is the base file for the Steme compiler.
+This is the base file for the Spark compiler.
 
 This file includes the parsing and grammar rules from
 the src/ directory, loads the relevant PGE libraries,
-and registers the compiler under the name 'Steme'.
+and registers the compiler under the name 'Spark'.
 
 =head2 Functions
 
@@ -16,16 +16,16 @@ and registers the compiler under the name 'Steme'.
 
 =item onload()
 
-Creates the Steme compiler using a C<PCT::HLLCompiler>
+Creates the Spark compiler using a C<PCT::HLLCompiler>
 object.
 
 =cut
 
-.HLL 'steme'
+.HLL 'spark'
 
 .namespace []
 
-.loadlib 'steme_group'
+.loadlib 'spark_group'
 
 .sub '' :anon :load :init
     load_bytecode 'PCT.pbc'
@@ -39,35 +39,35 @@ object.
 .include 'src/gen_grammar.pir'
 .include 'src/gen_actions.pir'
 
-.namespace [ 'Steme';'Compiler' ]
+.namespace [ 'Spark';'Compiler' ]
 .sub 'onload' :anon :load :init
-    .local pmc steme
+    .local pmc spark
     $P0 = get_root_global ['parrot'], 'P6metaclass'
-    steme = $P0.'new_class'('Steme::Compiler', 'parent'=>'PCT::HLLCompiler')
-    steme.'language'('steme')
-    $P0 = get_hll_namespace ['Steme';'Grammar']
-    steme.'parsegrammar'($P0)
-    $P0 = get_hll_namespace ['Steme';'Grammar';'Actions']
-    steme.'parseactions'($P0)
+    spark = $P0.'new_class'('Spark::Compiler', 'parent'=>'PCT::HLLCompiler')
+    spark.'language'('spark')
+    $P0 = get_hll_namespace ['Spark';'Grammar']
+    spark.'parsegrammar'($P0)
+    $P0 = get_hll_namespace ['Spark';'Grammar';'Actions']
+    spark.'parseactions'($P0)
 
     ## Create a list for holding the stack of nested blocks
     $P0 = new 'ResizablePMCArray'
-    set_hll_global ['Steme';'Grammar';'Actions'], '@?BLOCK', $P0
+    set_hll_global ['Spark';'Grammar';'Actions'], '@?BLOCK', $P0
     $P0 = new 'ResizablePMCArray'
-    set_hll_global ['Steme';'Grammar';'Actions'], '@?LIBRARY', $P0
+    set_hll_global ['Spark';'Grammar';'Actions'], '@?LIBRARY', $P0
 .end
 
 =item main(args :slurpy)  :main
 
 Start compilation by passing any command line C<args>
-to the Steme compiler.
+to the Spark compiler.
 
 =cut
 
 .sub 'main' :main
     .param pmc args
 
-    $P0 = compreg 'steme'
+    $P0 = compreg 'spark'
     $P1 = $P0.'command_line'(args)
 .end
 
