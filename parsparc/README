@@ -1,2 +1,23 @@
-Language 'Steme' was created with tools/dev/create_language.pl, $Revision$.
+This is parspark - the Parrot Spark Implementation. Spark is a fun dynamic
+programming language, based on Lisp and other languages. Its temporary
+homepage is:
+
+http://www.shlomifish.org/open-source/projects/Spark/
+
+Currently it just implements a subset of Scheme, but we want to convert
+it into Sparkisms eventually.
+
+Installation:
+-------------
+
+Run "perl Configure.pl -h" and follow the instructions.
+
+License:
+--------
+
+Spark is made available under the MIT/X11 Licence:
+
+* http://www.opensource.org/licenses/mit-license.php
+
+* http://en.wikipedia.org/wiki/MIT_License
 
