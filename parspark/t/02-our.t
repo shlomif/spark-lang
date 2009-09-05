@@ -1,5 +1,6 @@
 (say '1..2')
-(define a 1)
-(define b 2)
+(our a b)
+(:= a 1)
+(:= b 2)
 (say 'ok ' a)
 (say 'ok ' b)

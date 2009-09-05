@@ -34,7 +34,7 @@ token special {
     | <if> {*}                                   #= if
     | <my> {*}                                   #= my
     | <set> {*}                                  #= set
-    | <define> {*}                               #= define
+    | <our> {*}                                  #= our
     | <let> {*}                                  #= let
     | <lambda> {*}                               #= lambda
     | <library> {*}                              #= library
@@ -64,10 +64,9 @@ rule set {
     {*}
 }
 
-rule define {
-    'define'
-    <var=symbol>
-    <val=term>
+rule our {
+    'our'
+    [<ident> ]+
     {*}
 }
 

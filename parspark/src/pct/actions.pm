@@ -70,7 +70,7 @@ method my($/) {
             :name( $name ),
             :scope( 'lexical' ),
             :isdecl(1),
-            :node( $/ ),
+            :node( $_ ),
         );
         $stmts.push($var);
         $block.symbol( $name, :scope('lexical') );
@@ -84,18 +84,23 @@ method set($/) {
     make PAST::Op.new( $var, $val, :pasttype('bind'), :node($/) );
 }
 
-method define($/) {
-    our @?BLOCK;
+method our($/) {
     our @?LIBRARY;
     my $lib := @?LIBRARY[0];
     my @ns := $lib.namespace();
-    my $var := $<var>.ast;
-    $var.scope('package');
-    $var.namespace(@ns);
-    #$var.isdecl(1);
-    my $val := $<val>.ast;
-    $lib.symbol( $var.name, :scope('package') );
-    make PAST::Op.new( $var, $val, :pasttype('bind'), :node($/) );
+    my $stmts := PAST::Stmts.new();
+    for $<ident> {
+        my $name := ~$_;
+        my $var := PAST::Var.new(
+            :name( $name ),
+            :scope( 'package' ),
+            :isdecl(1),
+            :node( $_ ),
+        );
+        $stmts.push($var);
+        $lib.symbol( $name, :scope('package') );
+    }
+    make $stmts;
 }
 
 method let($/, $key) {
