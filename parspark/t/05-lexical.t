@@ -1,0 +1,6 @@
+(say '1..2')
+(my a b c)
+(:= a 1)
+(:= b 2)
+(say 'ok ' a)
+(say 'ok ' b)

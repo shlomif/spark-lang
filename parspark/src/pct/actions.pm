@@ -60,6 +60,30 @@ method if($/) {
     );
 }
 
+method my($/) {
+    our @?BLOCK;
+    my $block := @?BLOCK[0];
+    my $stmts := PAST::Stmts.new();
+    for $<ident> {
+        my $name := ~$_;
+        my $var := PAST::Var.new(
+            :name( $name ),
+            :scope( 'lexical' ),
+            :isdecl(1),
+            :node( $/ ),
+        );
+        $stmts.push($var);
+        $block.symbol( $name, :scope('lexical') );
+    }
+    make $stmts;
+}
+
+method set($/) {
+    my $var := $<var>.ast;
+    my $val := $<val>.ast;
+    make PAST::Op.new( $var, $val, :pasttype('bind'), :node($/) );
+}
+
 method define($/) {
     our @?BLOCK;
     our @?LIBRARY;

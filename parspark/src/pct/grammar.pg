@@ -32,6 +32,8 @@ rule statement {
 
 token special {
     | <if> {*}                                   #= if
+    | <my> {*}                                   #= my
+    | <set> {*}                                  #= set
     | <define> {*}                               #= define
     | <let> {*}                                  #= let
     | <lambda> {*}                               #= lambda
@@ -46,6 +48,19 @@ rule if {
     <cond=term>
     <iftrue=term>
     <iffalse=term>
+    {*}
+}
+
+rule my {
+    'my'
+    [<ident> ]+
+    {*}
+}
+
+rule set {
+    ':='
+    <var=symbol>
+    <val=term>
     {*}
 }
 
